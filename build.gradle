@@ -86,3 +86,48 @@ checkFormatAotTest.enabled = false
 
 formatAot.enabled = false
 formatAotTest.enabled = false
+
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Rektyy2004/devops-petclinic.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // For Maven projects
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            environment {
+                SONARQUBE = credentials('sonarqube-token') // Optional if using token
+            }
+            steps {
+                sh 'mvn sonar:sonar'
+            }
+        }
+    }
+
+    post {
+        success {
+            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+        }
+        failure {
+            echo 'Build failed!'
+        }
+    }
+}
+
