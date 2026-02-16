@@ -10,14 +10,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Use Gradle here instead of Maven
-                sh './gradlew clean build'
+                bat 'gradlew.bat clean build'
             }
         }
 
         stage('Test') {
             steps {
-                sh './gradlew test'
+                bat 'gradlew.bat test'
             }
         }
 
@@ -26,7 +25,7 @@ pipeline {
                 SONARQUBE = credentials('sonarqube-token') // Optional if using token
             }
             steps {
-                sh './gradlew sonarqube'
+                bat 'gradlew.bat sonarqube'
             }
         }
     }
