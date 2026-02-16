@@ -17,8 +17,11 @@ version = '4.0.0-SNAPSHOT'
 java {
   toolchain {
     languageVersion = JavaLanguageVersion.of(17)
+    // Let Gradle download JDK automatically
+    vendor = JvmVendorSpec.ADOPTOPENJDK
   }
 }
+
 
 repositories {
   mavenCentral()
