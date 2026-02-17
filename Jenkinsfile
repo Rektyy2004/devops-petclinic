@@ -10,14 +10,12 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Build project but skip tests
                 bat 'gradlew.bat clean build -x test'
             }
         }
 
         stage('Test') {
             steps {
-                // Tests disabled for now to avoid DB/Docker failures
                 echo 'Tests skipped in pipeline'
             }
         }
@@ -29,7 +27,6 @@ pipeline {
         }
     }
 
-    
     post {
         success {
             archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
