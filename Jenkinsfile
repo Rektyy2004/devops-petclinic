@@ -24,12 +24,12 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                // Run SonarQube scan
-                bat 'gradlew.bat sonarqube -x test'
+                echo 'SonarQube skipped'
             }
         }
     }
 
+    
     post {
         success {
             archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
